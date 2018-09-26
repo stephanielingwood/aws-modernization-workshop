@@ -8,7 +8,7 @@ phases:
       - REPOSITORY_URI=$(aws ecr describe-repositories --repository-name petstore_frontend --query=repositories[0].repositoryUri --output=text)
       - COMMIT_HASH=$(echo $CODEBUILD_RESOLVED_SOURCE_VERSION | cut -c 1-7)
       - IMAGE_TAG=${COMMIT_HASH:=latest}
-      - PWD=$(pwd)              
+      - PWD=$(pwd)
   build:
     commands:
       - echo Build started on `date`
@@ -27,5 +27,4 @@ phases:
       - printf '[{"name":"petstore","imageUri":"%s"}]' $REPOSITORY_URI:$IMAGE_TAG > ${CODEBUILD_SRC_DIR}/imagedefinitions.json
 artifacts:
   files:
-  - '*/imagedefinitions.json'
-  base-directory: ${CODEBUILD_SRC_DIR}
+  - 'imagedefinitions.json'
